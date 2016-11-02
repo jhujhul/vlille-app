@@ -1,6 +1,31 @@
-<h1>Liste des stations Vlille</h1>
-
-<table>
+<!-- <h1>Liste des stations Vlille</h1>
+<div>
+  <h3>Station selectionnée: {{$ctrl.selectedStation.label}}</h3>
+  <h3>Vélos libres: {{$ctrl.selectedStation.bikes}}</h3>
+  <h3>Places libres: {{$ctrl.selectedStation.attachs}}</h3>
+</div>
+<form>
+  <input type="radio" ng-model="$ctrl.filter" value="all" ngChange="$ctrl.filterMarkers()"> Male<br>
+  <input type="radio" ng-model="$ctrl.filter" value="velo" ngChange="$ctrl.filterMarkers()"> Vélo disponbile<br>
+  <input type="radio" ng-model="$ctrl.filter" value="station" ngChange="$ctrl.filterMarkers()"> Station disponible
+</form> -->
+<div class="menu-container">
+  <div class="menu-item">
+    Carte
+  </div><div class="menu-item">
+    Liste
+  </div>
+</div>
+<ui-gmap-google-map center='$ctrl.map.center'
+  zoom='$ctrl.map.zoom'
+  control='$ctrl.map.control'>
+  <ui-gmap-markers models="$ctrl.stationsMarkers"
+    coords="'self'"
+    icon="'icon'"
+    events="{click: $ctrl.handleClick}">
+  </ui-gmap-markers>
+</ui-gmap-google-map>
+<!-- <table>
   <thead>
     <th>Id</th>
     <th>Latitude</th>
@@ -15,4 +40,4 @@
       <td>{{station.$.name}}</td>
     </tr>
   </tbody>
-</table>
+</table> -->

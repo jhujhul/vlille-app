@@ -1,0 +1,13 @@
+.angular-google-map-container {
+  height: 92vh;
+}
+
+.menu-item {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+
+.menu-container {
+  height: 8vh;
+}
