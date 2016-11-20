@@ -9,14 +9,23 @@
   <input type="radio" ng-model="$ctrl.filter" value="velo" ngChange="$ctrl.filterMarkers()"> Vélo disponbile<br>
   <input type="radio" ng-model="$ctrl.filter" value="station" ngChange="$ctrl.filterMarkers()"> Station disponible
 </form> -->
-<div class="menu-container">
-  <div class="menu-item">
+<!-- <a ui-sref="hello" ui-sref-active="active">Hello</a>
+<a ui-sref="about" ui-sref-active="active">About</a> -->
+
+
+
+<!-- <div class="menu-container">
+  <div class="menu-item" ui-sref="map">
     Carte
-  </div><div class="menu-item">
+  </div><div class="menu-item" ui-sref="about">
     Liste
   </div>
-</div>
-<ui-gmap-google-map center='$ctrl.map.center'
+</div> -->
+<!-- <header-menu></menu-header> -->
+
+<ui-view></ui-view>
+
+<!-- <ui-gmap-google-map center='$ctrl.map.center'
   zoom='$ctrl.map.zoom'
   control='$ctrl.map.control'>
   <ui-gmap-markers models="$ctrl.stationsMarkers"
@@ -24,7 +33,9 @@
     icon="'icon'"
     events="{click: $ctrl.handleClick}">
   </ui-gmap-markers>
-</ui-gmap-google-map>
+</ui-gmap-google-map> -->
+
+
 <!-- <table>
   <thead>
     <th>Id</th>

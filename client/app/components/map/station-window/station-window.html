@@ -1,0 +1,9 @@
+<ui-gmap-window
+  coords='$ctrl.selectedStation'
+  show='$ctrl.selectedStation.id'>
+  <div>
+    <p>{{$ctrl.selectedStation.name}}</p>
+    <p>Vélos: {{$ctrl.selectedStation.bikes}}</p>
+    <p>Places: {{$ctrl.selectedStation.attachs}}</p>
+  </div>
+</ui-gmap-window>

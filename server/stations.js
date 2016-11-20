@@ -46,6 +46,7 @@ router.get('/:id', function(req, res, next) {
       next(err);
     }
     else {
+      res.set('Cache-Control', 'max-age=120');
       res.send(station);
     }
   });

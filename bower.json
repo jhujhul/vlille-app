@@ -17,6 +17,10 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-google-maps": "^2.4.0",
-    "normalize-css": "^5.0.0"
+    "normalize-css": "^5.0.0",
+    "angular-ui-router": "1.0.0-beta.3"
+  },
+  "resolutions": {
+    "angular-ui-router": "1.0.0-beta.3"
   }
 }

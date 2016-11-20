@@ -13,8 +13,8 @@ exports.getAllStations = function(callback) {
         var stationsList = result.markers.marker;
         var cleanStationList = stationsList.map(function(s) {
           var station = s.$;
-          station.lat = parseFloat(station.lat);
-          station.lng = parseFloat(station.lng);
+          station.latitude = parseFloat(station.lat);
+          station.longitude = parseFloat(station.lng);
           return station;
         });
 

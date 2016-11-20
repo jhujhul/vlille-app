@@ -1,6 +1,8 @@
 angular
   .module('app', [
-    'uiGmapgoogle-maps'
+    'components',
+    'uiGmapgoogle-maps',
+    'ui.router'
   ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -8,4 +10,7 @@ angular
         v: '3.25', //defaults to latest 3.X anyhow
         libraries: 'weather,geometry,visualization'
     });
+  })
+  .config(function($urlRouterProvider) {
+    $urlRouterProvider.otherwise('/map');
   });

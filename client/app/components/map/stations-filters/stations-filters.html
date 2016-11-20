@@ -1,0 +1,14 @@
+<ui-gmap-map-control position="TOP_CENTER">
+  <form name="filtersForm">
+    <label>Vélos:
+      <input type="checkbox"
+        ng-model="$ctrl.filters.avaibleBikes"
+        ng-change="$ctrl.onChange()">
+    </label><br/>
+    <label>Stations:
+      <input type="checkbox"
+        ng-model="$ctrl.filters.avaibleStations"
+        ng-change="$ctrl.onChange()">
+     </label>
+   </form>
+</ui-gmap-map-control>

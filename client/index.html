@@ -1,23 +1,53 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
   <head>
-    <title>Stations vlille</title>
     <meta charset="utf-8">
+    <title>Stations vlille</title>
     <meta name="referrer" content="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="bower_components/normalize-css/normalize.css">
 
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <!-- build:css css/vendor.css -->
+    <link href="bower_components/normalize-css/normalize.css" rel="stylesheet">
+    <!-- endbuild -->
+
+    <!-- build:css css/styles.css -->
+    <link href="app/app.css" rel="stylesheet">
+    <!-- endbuild -->
   </head>
-  <body ng-app="app">
+  <body ng-app="app" ng-cloak>
     <app></app>
 
+    <!-- build:js js/vendor.js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- endbuild -->
 
-    <script src="app.js"></script>
-    <script src="app.component.js"></script>
-    <script src="app.controller.js"></script>
-    <script src="app.service.js"></script>
+    <!-- build:js js/scripts.js -->
+    <script src="app/app.js"></script>
+    <script src="app/app.component.js"></script>
+    <script src="app/app.controller.js"></script>
+    <script src="app/app.service.js"></script>
+    <script src="app/app.config.js"></script>
+
+    <script src="app/components/components.module.js"></script>
+
+    <script src="app/components/map/map.module.js"></script>
+    <script src="app/components/map/map.component.js"></script>
+    <script src="app/components/map/map.controller.js"></script>
+
+    <script src="app/components/map/stations-filters/stations-filters.module.js"></script>
+    <script src="app/components/map/stations-filters/stations-filters.component.js"></script>
+
+    <script src="app/components/map/station-window/station-window.module.js"></script>
+    <script src="app/components/map/station-window/station-window.component.js"></script>
+    <script src="app/components/map/station-window/station-window.controller.js"></script>
+    <!-- endbuild -->
+
+    <!-- Live reload script: https://github.com/gruntjs/grunt-contrib-watch#live-reloading -->
+    <script src="http://localhost:35729/livereload.js"></script>
   </body>
 </html>
