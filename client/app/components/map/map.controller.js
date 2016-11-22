@@ -103,25 +103,12 @@ function MapController(AppService, uiGmapIsReady) {
       station.longitude < bounds.b.f;
   }
 
-  ctrl.handleClick = function (marker, eventName, model, arguments) {
-    // console.log("marker", marker);
-    // console.log("eventName", eventName);
-    // console.log("model", model);
-    // console.log("arguments", arguments);
-
+  ctrl.onMarkerClick = function (marker, eventName, model, arguments) {
     ctrl.selectedStation = AppService.getStationById(marker.key);
+  };
 
-    console.log("handleClick", ctrl.selectedStation);
-    // console.log(selectedStation)
-    //
-    //
-    // // ctrl.selectedStation = model;
-    //
-    // ctrl.map.window.coords = {
-    //   latitude: selectedStation.lat,
-    //   longitude: selectedStation.lng
-    // };
-    // ctrl.map.window.show = true;
+  ctrl.deleteSelectedStation = function() {
+    ctrl.selectedStation = {};
   };
 }
 

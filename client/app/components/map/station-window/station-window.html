@@ -1,6 +1,8 @@
 <ui-gmap-window
   coords='$ctrl.selectedStation'
-  show='$ctrl.selectedStation.id'>
+  closeClick="$ctrl.onCloseClick()"
+  show='true'
+  ng-if='$ctrl.selectedStation.id'>
   <div>
     <p>{{$ctrl.selectedStation.name}}</p>
     <p>Vélos: {{$ctrl.selectedStation.bikes}}</p>

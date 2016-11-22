@@ -1,20 +1,21 @@
-<ui-gmap-google-map center='$ctrl.map.center'
+<ui-gmap-google-map
+  center='$ctrl.map.center'
   zoom='$ctrl.map.zoom'
   control='$ctrl.map.control'
   events='$ctrl.map.events'
   options='$ctrl.map.options'>
-  <ui-gmap-markers models="$ctrl.stationsMarkers"
+  <ui-gmap-markers
+    models="$ctrl.stationsMarkers"
     coords="'self'"
     icon="'icon'"
-    events="{click: $ctrl.handleClick}">
+    events="{click: $ctrl.onMarkerClick}">
   </ui-gmap-markers>
-  <stations-filters filters="$ctrl.filters"
+  <stations-filters
+    filters="$ctrl.filters"
     on-change="$ctrl.refreshMarkersList()">
   </stations-filters>
-  <station-window selected-station="$ctrl.selectedStation"></station-window>
-  <ui-gmap-window
-    coords='$ctrl.map.window.coords'
-    show='$ctrl.map.window.show'>
-    <p>Miaou !! </p>
-  </ui-gmap-window>
+  <station-window
+    selected-station="$ctrl.selectedStation"
+    on-close-click="$ctrl.deleteSelectedStation()">
+  </station-window>
 </ui-gmap-google-map>
