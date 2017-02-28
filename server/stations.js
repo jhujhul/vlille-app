@@ -2,20 +2,33 @@ var express = require('express');
 var router = express.Router();
 var vlilleApi = require('./vlille-api');
 var async = require('async');
+var stationsCache = require('./stations-cache');
 
 router.get('/', function(req, res, next) {
-  async.waterfall([
-    vlilleApi.getAllStations,
-    // getLiveDataForStations
-  ], function(err, stations) {
-    if(err) {
-      next(err);
-    }
-    else {
-      res.set('Cache-Control', 'public, max-age=120000');
-      res.send(stations);
-    }
-  });
+  var stations = stationsCache.getAll();
+  res.send(stations);
+
+  // stationsCache.fetchStationsList(function(err, stations) {
+  //   if(err) {
+  //     return next(err);
+  //   }
+
+  //   res.send(stations);
+  // })
+  
+
+  // async.waterfall([
+  //   vlilleApi.getAllStations,
+  //   // getLiveDataForStations
+  // ], function(err, stations) {
+  //   if(err) {
+  //     next(err);
+  //   }
+  //   else {
+  //     // res.set('Cache-Control', 'public, max-age=120000');
+  //     res.send(stations);
+  //   }
+  // });
 
 });
 
@@ -46,7 +59,7 @@ router.get('/:id', function(req, res, next) {
       next(err);
     }
     else {
-      res.set('Cache-Control', 'max-age=120');
+      // res.set('Cache-Control', 'max-age=120');
       res.send(station);
     }
   });
