@@ -6,34 +6,19 @@ var cachedStations = [];
 
 initialFetchAndStartCronJob();
 
-function initialFetchAndStartCronJob() {
-    async.series([
-        fetchAllStations,
-        function() {
-            setTimeout(function () {
-                console.log("Start cron job");
-                var job = new CronJob('10 */5 * * * *', 
-                    fetchAllStations,
-                    null,
-                    true
-                );
-            }, 2 * 60 * 1000);
-        }
-    ]);
-}
+exports.getAll = getAllCachedStations;
+exports.getById = getCachedStationById;
 
-exports.getAll = function() {
+function getAllCachedStations() {
     return cachedStations;
-};
-
-exports.getById = function(id) {
-    return getCachedStationById(id);
-};
+}
 
 function getCachedStationById(id) {
     var station = cachedStations.find(function(s) {
         return s.id === id;
     });
+
+    console.log('station', station)
 
     return station;
 }
@@ -51,33 +36,24 @@ exports.updateList = function(stations) {
     cachedStations = updateCachedStations;
 };
 
-exports.fetchStationsList = fetchStationsList;
-
-function fetchStationsList(callback) {
-    vlilleApi.getAllStations(function(err, fetchedStations) {
-        if(err) {
-            return callback(err);
+function initialFetchAndStartCronJob() {
+    async.series([
+        // Fetch all stations
+        fetchAllStations,
+        // 2 minutes later, start a cron job
+        // Cron job fetch all stations every 5 minutes
+        function() {
+            setTimeout(function () {
+                console.log("Start cron job");
+                var job = new CronJob('10 */5 * * * *', 
+                    fetchAllStations,
+                    null,
+                    true
+                );
+            }, 2 * 60 * 1000);
         }
-
-        var newCachedStations = [];
-
-        for(var i = 0; i < fetchedStations.length; i++) {
-            var fetchedStation = fetchedStations[i];
-            var cachedStation = cachedStations.find(function(s) {
-                return s.id === fetchedStation.id;
-            });
-
-            newCachedStation = Object.assign({}, cachedStation, fetchedStation);
-            newCachedStations.push(newCachedStation);
-        }
-
-        cachedStations = newCachedStations;
-        console.log("Stations list fetched");
-        callback();
-    });
-};
-
-exports.fetchAllStations = fetchAllStations;
+    ]);
+}
 
 function fetchAllStations(callback) {
     callback = callback || noop;  // callback is optionnal
@@ -97,6 +73,28 @@ function fetchAllStations(callback) {
 var noop = function() {
     return undefined;
 }; // do nothing.
+
+function fetchStationsList(callback) {
+    vlilleApi.getAllStations(function(err, fetchedStations) {
+        if(err) {
+            return callback(err);
+        }
+
+        var newCachedStations = [];
+
+        for(var i = 0; i < fetchedStations.length; i++) {
+            var fetchedStation = fetchedStations[i];
+            var cachedStation = getCachedStationById(fetchedStation.id);
+
+            newCachedStation = Object.assign({}, cachedStation, fetchedStation);
+            newCachedStations.push(newCachedStation);
+        }
+
+        cachedStations = newCachedStations;
+        console.log("Stations list fetched");
+        callback();
+    });
+};
 
 function fetchEveryStations(callback) {
     async.eachSeries(cachedStations, function(cachedStation, cb) {

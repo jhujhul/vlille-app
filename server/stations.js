@@ -7,29 +7,6 @@ var stationsCache = require('./stations-cache');
 router.get('/', function(req, res, next) {
   var stations = stationsCache.getAll();
   res.send(stations);
-
-  // stationsCache.fetchStationsList(function(err, stations) {
-  //   if(err) {
-  //     return next(err);
-  //   }
-
-  //   res.send(stations);
-  // })
-  
-
-  // async.waterfall([
-  //   vlilleApi.getAllStations,
-  //   // getLiveDataForStations
-  // ], function(err, stations) {
-  //   if(err) {
-  //     next(err);
-  //   }
-  //   else {
-  //     // res.set('Cache-Control', 'public, max-age=120000');
-  //     res.send(stations);
-  //   }
-  // });
-
 });
 
 function getLiveDataForStations(stations, callback) {
@@ -54,15 +31,8 @@ function getLiveDataForStations(stations, callback) {
 }
 
 router.get('/:id', function(req, res, next) {
-  vlilleApi.getStationById(req.params.id, function(err, station) {
-    if(err) {
-      next(err);
-    }
-    else {
-      // res.set('Cache-Control', 'max-age=120');
-      res.send(station);
-    }
-  });
+  var station = stationsCache.getById(req.params.id);
+  res.send(station);
 });
 
 module.exports = router;
