@@ -8,6 +8,7 @@ initialFetchAndStartCronJob();
 
 exports.getAll = getAllCachedStations;
 exports.getById = getCachedStationById;
+exports.fetchById = fetchById;
 
 function getAllCachedStations() {
     return cachedStations;
@@ -106,11 +107,25 @@ function fetchEveryStations(callback) {
             Object.assign(cachedStation, fetchedStation);
             console.log("Station " + cachedStation.name + " fetched");
             cb();
-        })
+        });
     }, function(err) {
         if(err) {
             return callback(err);
         }
         callback();
+    });
+}
+
+function fetchById(id, callback) {
+    vlilleApi.getStationById(id, function(err, fetchedStation) {
+        if(err) {
+            return callback(err);
+        }
+        
+        var cachedStation = getCachedStationById(id);
+
+        Object.assign(cachedStation, fetchedStation);
+        console.log("Station " + cachedStation.name + " fetched");
+        cb();
     });
 }
