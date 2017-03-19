@@ -10,40 +10,28 @@ router.get('/', function(req, res, next) {
   res.send(stations);
 });
 
-function getLiveDataForStations(stations, callback) {
-  var liveStationsList = [];
-
-  async.each(stations, function(station, callback) {
-    vlilleApi.getStationById(station.id, function(err, liveStation) {
-      if(err) {
-        callback(err);
-      }
-      else {
-        liveStationsList.push(Object.assign(liveStation, station));
-        callback();
-      }
-    });
-  }, function(err) {
-    if(err) {
-      return callback(err);
-    }
-    callback(null, liveStationsList);
-  });
-}
-
 router.get('/:id', function(req, res, next) {
-  var station = stationsCache.getById(req.params.id);
+  var stationId = req.params.id;
+  var station = stationsCache.getById(stationId);
 
   if(!station) {
-    var error = Boom.notFound('No station found with id = ' + req.params.id);
+    var error = Boom.notFound('No station found with id = ' + stationId);
     return next(error);
   }
-
+  
+  // If station was updated less than 2 minutes ago, send it from cache
   if(getMinutesFromNow(station.lastUpdate) < 2) {
     return res.send(station);
   }
 
-  
+  // Else fetch if
+  stationsCache.fetchById(stationId, function(err, station) {
+    if(err) {
+      return next(err);
+    }
+
+    res.send(station);
+  });
 });
 
 function getMinutesFromNow(isoDate) {

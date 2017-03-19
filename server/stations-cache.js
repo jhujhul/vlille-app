@@ -19,23 +19,8 @@ function getCachedStationById(id) {
         return s.id === id;
     });
 
-    console.log('station', station)
-
     return station;
 }
-
-exports.updateList = function(stations) {
-    var updateCachedStations = [];
-
-    for(var i = O; i < stations.length; i++) {
-        var station = stations[i];
-        var cachedStation = getCachedStationById(station.id);
-        var updateCachedStation = Object.assign({}, cachedStation, station);
-        updateCachedStations.push(updateCachedStation);
-    }
-
-    cachedStations = updateCachedStations;
-};
 
 function initialFetchAndStartCronJob() {
     async.series([
@@ -67,6 +52,7 @@ function fetchAllStations(callback) {
             return callback(err);
         }
 
+        console.log("All stations  fetched");
         callback();
     });
 };
@@ -92,40 +78,41 @@ function fetchStationsList(callback) {
         }
 
         cachedStations = newCachedStations;
-        console.log("Stations list fetched");
         callback();
     });
 };
 
 function fetchEveryStations(callback) {
-    async.eachSeries(cachedStations, function(cachedStation, cb) {
-        vlilleApi.getStationById(cachedStation.id, function(err, fetchedStation) {
+    async.eachSeries(cachedStations,
+        updateCachedStation,
+        function(err) {
             if(err) {
-                return cb(err);
+                return callback(err);
             }
-
-            Object.assign(cachedStation, fetchedStation);
-            console.log("Station " + cachedStation.name + " fetched");
-            cb();
-        });
-    }, function(err) {
-        if(err) {
-            return callback(err);
+            callback();
         }
-        callback();
-    });
+    );
 }
 
 function fetchById(id, callback) {
-    vlilleApi.getStationById(id, function(err, fetchedStation) {
+    var cachedStation = getCachedStationById(id);
+    
+    updateCachedStation(cachedStation, function(err) {
         if(err) {
             return callback(err);
         }
-        
-        var cachedStation = getCachedStationById(id);
+
+        callback(null, cachedStation);
+    });
+}
+
+function updateCachedStation(cachedStation, callback) {
+    vlilleApi.getStationById(cachedStation.id, function(err, fetchedStation) {
+        if(err) {
+            return callback(err);
+        }
 
         Object.assign(cachedStation, fetchedStation);
-        console.log("Station " + cachedStation.name + " fetched");
-        cb();
-    });
+        callback();
+    }); 
 }
