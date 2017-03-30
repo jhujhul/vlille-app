@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var Boom = require('boom');
-var async = require('async');
-var vlilleApi = require('./vlille-api');
 var stationsCache = require('./stations-cache');
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   var stations = stationsCache.getAll();
   res.send(stations);
 });
@@ -18,7 +16,7 @@ router.get('/:id', function(req, res, next) {
     var error = Boom.notFound('No station found with id = ' + stationId);
     return next(error);
   }
-  
+
   // If station was updated less than 2 minutes ago, send it from cache
   if(getMinutesFromNow(station.lastUpdate) < 2) {
     return res.send(station);
@@ -38,7 +36,7 @@ function getMinutesFromNow(isoDate) {
   var now = new Date();
   var then = new Date(isoDate);
   var differenceInMinutes =  ( now - then ) / ( 1000 * 60 );
-  
+
   return differenceInMinutes;
 }
 

@@ -1,7 +1,7 @@
 var request = require('request');
 var parseString = require('xml2js').parseString;
 
-var API_BASE_URL = 'http://www.vlille.fr/stations/'
+var API_BASE_URL = 'http://www.vlille.fr/stations/';
 
 exports.getAllStations = function(callback) {
   var url = API_BASE_URL + 'xml-stations.aspx';
@@ -19,14 +19,14 @@ exports.getAllStations = function(callback) {
     parseString(body, function (err, result) {
       var stationsList = result.markers.marker;
       var cleanStationList = stationsList.map(function(s) {
-      var station = s.$;
-        
+        var station = s.$;
+
         return {
           id: station.id,
           name: station.name,
           latitude: parseFloat(station.lat),
           longitude: parseFloat(station.lng)
-        }
+        };
       });
 
       callback(null, cleanStationList);

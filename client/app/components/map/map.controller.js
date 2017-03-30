@@ -36,8 +36,8 @@ function MapController(AppService, uiGmapIsReady) {
   };
 
   uiGmapIsReady.promise(1).then(function(instances) {
-      console.log("gmap ready !");
-      ctrl.getInBoundsStationsData();
+    console.log('gmap ready !');
+    ctrl.getInBoundsStationsData();
   });
 
   ctrl.refreshMarkersList = function() {
@@ -56,7 +56,7 @@ function MapController(AppService, uiGmapIsReady) {
         ctrl.stationsMarkers.push(marker);
       }
     });
-  }
+  };
 
   function displayStation(station) {
     if(ctrl.filters.avaibleBikes && !station.bikes) {
@@ -94,7 +94,7 @@ function MapController(AppService, uiGmapIsReady) {
           });
       }
     }
-  }
+  };
 
   function isStationInBounds(station, bounds) {
     return station.latitude > bounds.f.f &&

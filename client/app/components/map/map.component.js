@@ -19,7 +19,7 @@ angular
           return AppService.fetchAllStations();
         }
       }
-    }
+    };
 
     $stateProvider.state(MapState);
   });
