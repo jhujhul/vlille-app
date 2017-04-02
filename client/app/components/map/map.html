@@ -4,12 +4,10 @@
   control='$ctrl.map.control'
   events='$ctrl.map.events'
   options='$ctrl.map.options'>
-  <ui-gmap-markers
-    models="$ctrl.stationsMarkers"
-    coords="'self'"
-    icon="'icon'"
-    events="{click: $ctrl.onMarkerClick}">
-  </ui-gmap-markers>
+  <stations-markers
+    markers='$ctrl.stationsMarkers'
+    on-station-selected='$ctrl.selectStation(id)'>
+  </stations-markers>
   <stations-filters
     filters="$ctrl.filters"
     on-change="$ctrl.refreshMarkersList()">

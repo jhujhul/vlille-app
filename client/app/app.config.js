@@ -1,5 +1,5 @@
 angular.module('config', [])
 
-.constant('config', {API_SERVER_BASEURL:'http://localhost:8001'})
+.constant('config', {API_SERVER_BASEURL:'http://localhost:3000/api'})
 
 ;

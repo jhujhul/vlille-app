@@ -2,7 +2,8 @@ angular
   .module('app', [
     'components',
     'uiGmapgoogle-maps',
-    'ui.router'
+    'ui.router',
+    'config'
   ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({

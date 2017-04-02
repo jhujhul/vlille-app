@@ -1,10 +1,17 @@
-function MapController(AppService, uiGmapIsReady) {
+angular
+  .module('map')
+  .controller('MapController', MapController);
+
+function MapController(StationsService, uiGmapIsReady) {
   var ctrl = this;
 
   ctrl.$onInit = function() {
-    console.log(ctrl.stations);
-    ctrl.stationsMarkers = [];
+    ctrl.filters = {
+      avaibleBikes: false,
+      avaibleStations: false
+    };
     ctrl.selectedStation= {};
+    ctrl.stationsMarkers = getMarkersList();
 
     ctrl.map = {
       center: {
@@ -17,32 +24,19 @@ function MapController(AppService, uiGmapIsReady) {
         mapTypeControl: false,
         streetViewControl: false
       },
-      events: {
-        dragend: ctrl.getInBoundsStationsData,
-        zoom_changed: ctrl.getInBoundsStationsData
-      },
       window: {
         show: false,
         marker: {}
       }
     };
-
-    ctrl.filters = {
-      avaibleBikes: false,
-      avaibleStations: false
-    };
-
-    ctrl.refreshMarkersList();
   };
 
-  uiGmapIsReady.promise(1).then(function(instances) {
-    console.log('gmap ready !');
-    ctrl.getInBoundsStationsData();
-  });
+  // uiGmapIsReady.promise(1).then(function(instances) {
+  //   console.log('gmap ready !');
+  // });
 
-  ctrl.refreshMarkersList = function() {
-    ctrl.stations = AppService.getAllStations();
-    ctrl.stationsMarkers = [];
+  function getMarkersList() {
+    var newStationsMarkers = [];
 
     angular.forEach(ctrl.stations, function(station) {
       if(displayStation(station)) {
@@ -53,17 +47,21 @@ function MapController(AppService, uiGmapIsReady) {
           label: station.name
         };
 
-        ctrl.stationsMarkers.push(marker);
+        newStationsMarkers.push(marker);
       }
     });
+
+    return newStationsMarkers;
+  }
+
+  ctrl.refreshMarkersList = function() {
+    ctrl.stationsMarkers = getMarkersList();
   };
 
   function displayStation(station) {
-    if(ctrl.filters.avaibleBikes && !station.bikes) {
-      return false;
-    }
-
-    if(ctrl.filters.avaibleStations && !station.attachs) {
+    if( ctrl.filters.avaibleBikes && !station.bikes
+        || ctrl.filters.avaibleStations && !station.attachs
+        || station.id === ctrl.selectedStation.id ) {
       return false;
     }
 
@@ -72,46 +70,17 @@ function MapController(AppService, uiGmapIsReady) {
 
   navigator.geolocation.getCurrentPosition(function(position) {
     ctrl.map.control.refresh({latitude: position.coords.latitude, longitude: position.coords.longitude});
-
-    console.log(position);
-
-    ctrl.getInBoundsStationsData();
   }, function() {
-    handleLocationError(true, infoWindow, map.getCenter());
+    console.log('Cannot get current position');
   });
 
-  ctrl.getInBoundsStationsData = function() {
-    var bounds = ctrl.map.control.getGMap().getBounds();
-
-    for (var i = 0; i < ctrl.stations.length; i++){
-      var station = ctrl.stations[i];
-      if( isStationInBounds(station, bounds) ) {
-        AppService.fetchStationById(station.id)
-          .then(function(stationDataHasChanged) {
-            if(stationDataHasChanged) {
-              ctrl.refreshMarkersList();
-            }
-          });
-      }
-    }
-  };
-
-  function isStationInBounds(station, bounds) {
-    return station.latitude > bounds.f.f &&
-      station.latitude < bounds.f.b &&
-      station.longitude > bounds.b.b &&
-      station.longitude < bounds.b.f;
-  }
-
-  ctrl.onMarkerClick = function (marker, eventName, model, arguments) {
-    ctrl.selectedStation = AppService.getStationById(marker.key);
+  ctrl.selectStation = function(id) {
+    ctrl.selectedStation = StationsService.getStationById(id);
+    ctrl.refreshMarkersList();
   };
 
   ctrl.deleteSelectedStation = function() {
     ctrl.selectedStation = {};
+    ctrl.refreshMarkersList();
   };
 }
-
-angular
-  .module('map')
-  .controller('MapController', MapController);

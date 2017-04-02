@@ -43,7 +43,7 @@ module.exports = function (grunt) {
       },
       dev: {
         constants: {
-          config: grunt.file.readJSON('config-dev.json')
+          config: grunt.file.readJSON('client/config-dev.json')
         }
       }
     },

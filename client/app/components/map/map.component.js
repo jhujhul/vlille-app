@@ -1,22 +1,20 @@
-var MapComponent = {
-  templateUrl: 'app/components/map/map.html',
-  controller: 'MapController',
-  bindings: {
-    stations: '<'
-  }
-};
-
 angular
   .module('map')
-  .component('map', MapComponent)
+  .component('map', {
+    templateUrl: 'app/components/map/map.html',
+    controller: 'MapController',
+    bindings: {
+      stations: '<'
+    }
+  })
   .config(function($stateProvider) {
     var MapState = {
       name: 'map',
       url: '/map',
       component: 'map',
       resolve: {
-        stations: function(AppService) {
-          return AppService.fetchAllStations();
+        stations: function(StationsService) {
+          return StationsService.fetchAllStations();
         }
       }
     };
