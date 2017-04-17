@@ -51,10 +51,10 @@ exports.getStationById = function(id, callback) {
       var station = result.station;
       var cleanStation = {
         adress: station.adress[0],
-        status: station.status[0],
+        isOutOfService: isStationOutOfService(station.status[0]),
         bikes: parseInt(station.bikes[0]),
         attachs: parseInt(station.attachs[0]),
-        paiement: station.paiement[0],
+        hasCreditCardTerminal: hasStationCreditCardTerminal(station.paiement[0]),
         lastUpdate: parseLastUp(station.lastupd[0])
       };
 
@@ -79,4 +79,12 @@ function getDateXSecondsFromNow(seconds) {
   date.setSeconds(date.getSeconds() - seconds);
 
   return date.toISOString();
+}
+
+function hasStationCreditCardTerminal(paiement) {
+  return paiement === 'AVEC_TPE';
+}
+
+function isStationOutOfService(status) {
+  return status !== "0";
 }
