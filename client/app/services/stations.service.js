@@ -7,6 +7,7 @@ function StationsService($http, $q, config) {
 
   var service = {
     fetchAllStations: fetchAllStations,
+    fetchStationById: fetchStationById,
     getStationById: getStationById
   };
 
@@ -26,6 +27,22 @@ function StationsService($http, $q, config) {
       });
   }
 
+  function fetchStationById(id) {
+    var url = config.API_SERVER_BASEURL + '/stations/' + id;
+
+    return $http.get(url)
+      .then(function getStationSuccess(response) {
+        var station = response.data;
+        updateStation(id, station);
+
+        return station;
+      })
+      .catch(function getStationError(error) {
+        console.log('XHR error for getStations');
+        $q.reject(error.data);
+      });
+  }
+
   function getStationById(id) {
     for (var i = 0; i < stations.length; i++) {
       if(stations[i].id === id) {
@@ -33,5 +50,14 @@ function StationsService($http, $q, config) {
       }
     }
     return {};
+  }
+
+  function updateStation(id, station) {
+    for (var i = 0; i < stations.length; i++) {
+      if (stations[i].id === id) {
+        stations[i] = station;
+        return;
+      }
+    }
   }
 }

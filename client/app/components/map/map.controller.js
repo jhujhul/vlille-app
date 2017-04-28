@@ -2,7 +2,7 @@ angular
   .module('map')
   .controller('MapController', MapController);
 
-function MapController(StationsService, uiGmapIsReady) {
+function MapController(StationsService, uiGmapIsReady, $rootScope) {
   var ctrl = this;
 
   ctrl.$onInit = function() {
@@ -83,4 +83,11 @@ function MapController(StationsService, uiGmapIsReady) {
     ctrl.selectedStation = {};
     ctrl.refreshMarkersList();
   };
+
+  $rootScope.$on('refreshStation', function(event, data) {
+    StationsService.fetchStationById(ctrl.selectedStation.id)
+      .then(function(station) {
+        ctrl.selectedStation = station;
+      });
+  });
 }

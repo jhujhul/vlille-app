@@ -3,10 +3,10 @@
   closeClick="$ctrl.onCloseClick()"
   show='true'
   ng-if='$ctrl.selectedStation.id'>
-  <div ng-controller="StationWindowDivController">
+  <div ng-controller="StationWindowDivController as divCtrl">
     <p>{{$ctrl.selectedStation.name}}</p>
     <p>Vélos: {{$ctrl.selectedStation.bikes}}</p>
     <p>Places: {{$ctrl.selectedStation.attachs}}</p>
-    <button ng-click="showInfo()">Refresh</button>
+    <button ng-click="divCtrl.refreshStation()">Refresh</button>
   </div>
 </ui-gmap-window>
