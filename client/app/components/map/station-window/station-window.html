@@ -3,10 +3,18 @@
   closeClick="$ctrl.onCloseClick()"
   show='true'
   ng-if='$ctrl.selectedStation.id'>
-  <div ng-controller="StationWindowDivController as divCtrl">
-    <p>{{$ctrl.selectedStation.name}}</p>
-    <p>Vélos: {{$ctrl.selectedStation.bikes}}</p>
-    <p>Places: {{$ctrl.selectedStation.attachs}}</p>
-    <button ng-click="divCtrl.refreshStation()">Refresh</button>
+  <div ng-controller="StationWindowDivController as divCtrl" class="station-window">
+    <h3 class="station-window__name">{{$ctrl.selectedStation.name}}</h3>
+    <div class="station-window__status">
+      <span ng-if="!$ctrl.selectedStation.isOutOfService" class="station-window__status--ok">En service</span>
+      <span ng-if="$ctrl.selectedStation.isOutOfService" class="station-window__status--ko">Hors-service</span>
+    </div>
+    <!-- Making leading zeros: http://stackoverflow.com/a/30920883 -->
+    <div>{{("00" + $ctrl.selectedStation.bikes).slice(-2)}} <span class="text--important">vélos</span> disponibles</div>
+    <div class="station-window__bornes">{{("00" + $ctrl.selectedStation.attachs).slice(-2)}} <span class="text--important">bornes</span> disponibles</div>
+    <div class="station-window__last-update">
+      <span ng-click="divCtrl.refreshStation()" class="station-window__last-update-button"></span>
+      Dernière mise à jour: {{$ctrl.selectedStation.lastUpdate | timeElapsed}} minutes
+    </div>
   </div>
 </ui-gmap-window>

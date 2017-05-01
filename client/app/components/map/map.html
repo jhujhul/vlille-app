@@ -8,12 +8,15 @@
     markers='$ctrl.stationsMarkers'
     on-station-selected='$ctrl.selectStation(id)'>
   </stations-markers>
-  <stations-filters
+  <!--<stations-filters
     filters="$ctrl.filters"
     on-change="$ctrl.refreshMarkersList()">
-  </stations-filters>
+  </stations-filters>-->
   <station-window
     selected-station="$ctrl.selectedStation"
     on-close-click="$ctrl.deleteSelectedStation()">
   </station-window>
+  <center-map-control
+    on-click="$ctrl.centerMapOnUser()">
+  </center-map-control>
 </ui-gmap-google-map>

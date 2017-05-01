@@ -96,6 +96,9 @@ module.exports = function (grunt) {
         files: [{
           src: '.tmp/concat/js/scripts.js',
           dest: '.tmp/concat/js/scripts.js'
+        }, {
+          src: '.tmp/concat/js/vendor.js',
+          dest: '.tmp/concat/js/vendor.js'
         }]
       }
     },

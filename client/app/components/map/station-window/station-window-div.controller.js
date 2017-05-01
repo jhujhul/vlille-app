@@ -6,6 +6,6 @@ function StationWindowDivController($rootScope) {
   var ctrl = this;
 
   ctrl.refreshStation = function() {
-    $rootScope.$broadcast('refreshStation');
+    $rootScope.$broadcast('refreshSelectedStation');
   };
 }

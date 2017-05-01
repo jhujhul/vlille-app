@@ -2,7 +2,7 @@ angular
   .module('map')
   .controller('MapController', MapController);
 
-function MapController(StationsService, uiGmapIsReady, $rootScope) {
+function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
   var ctrl = this;
 
   ctrl.$onInit = function() {
@@ -10,15 +10,17 @@ function MapController(StationsService, uiGmapIsReady, $rootScope) {
       avaibleBikes: false,
       avaibleStations: false
     };
-    ctrl.selectedStation= {};
+    ctrl.selectedStation = {};
+    ctrl.userPosition = null;
     ctrl.stationsMarkers = getMarkersList();
 
     ctrl.map = {
+      // Opéra de Lille
       center: {
-        latitude: 50.637222,
-        longitude: 3.09
+        latitude: 50.637522,
+        longitude: 3.065183
       },
-      zoom: 17,
+      zoom: 16,
       control: {},
       options: {
         mapTypeControl: false,
@@ -51,31 +53,73 @@ function MapController(StationsService, uiGmapIsReady, $rootScope) {
       }
     });
 
+    if(ctrl.userPosition) {
+      console.log('ctrl.userPosition', ctrl.userPosition)
+      var userMarker = {
+        id: 'user',
+        latitude: ctrl.userPosition.coords.latitude,
+        longitude: ctrl.userPosition.coords.longitude,
+        icon: {
+          url: 'assets/user-location.png',
+          anchor: {
+            x: 18,
+            y: 18
+          }
+        }
+      };
+
+      newStationsMarkers.push(userMarker);
+    }
+
     return newStationsMarkers;
   }
 
-  ctrl.refreshMarkersList = function() {
-    ctrl.stationsMarkers = getMarkersList();
-  };
-
   function displayStation(station) {
-    if( ctrl.filters.avaibleBikes && !station.bikes
-        || ctrl.filters.avaibleStations && !station.attachs
-        || station.id === ctrl.selectedStation.id ) {
+    if (ctrl.filters.avaibleBikes && !station.bikes
+      || ctrl.filters.avaibleStations && !station.attachs
+      || station.id === ctrl.selectedStation.id) {
       return false;
     }
 
     return true;
   }
 
-  navigator.geolocation.getCurrentPosition(function(position) {
-    ctrl.map.control.refresh({latitude: position.coords.latitude, longitude: position.coords.longitude});
-  }, function() {
-    console.log('Cannot get current position');
-  });
+  ctrl.refreshMarkersList = function() {
+    ctrl.stationsMarkers = getMarkersList();
+  };
+
+  if (navigator.geolocation) {
+    getUserPosition(0);
+    $interval(getUserPosition, 30 * 1000);
+  }
+
+  function getUserPosition(intervalCount) {
+    var firstTimeFunctionIsCalled = intervalCount === 0;
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+      ctrl.userPosition = position;
+      ctrl.refreshMarkersList();
+      if (firstTimeFunctionIsCalled) {
+        ctrl.centerMapOnUser();
+      }
+    }, function () {
+      console.log('Cannot get current position');
+    });
+  }
+
+  function centerMap(lat, lng) {
+    ctrl.map.control.refresh({ latitude: lat, longitude: lng });
+  }
+
+  ctrl.centerMapOnUser = function() {
+    if (ctrl.userPosition) {
+      centerMap(ctrl.userPosition.coords.latitude, ctrl.userPosition.coords.longitude);
+    }
+  };
 
   ctrl.selectStation = function(id) {
     ctrl.selectedStation = StationsService.getStationById(id);
+    console.log('ctrl.selectedStation', ctrl.selectedStation)
     ctrl.refreshMarkersList();
   };
 
@@ -84,7 +128,7 @@ function MapController(StationsService, uiGmapIsReady, $rootScope) {
     ctrl.refreshMarkersList();
   };
 
-  $rootScope.$on('refreshStation', function(event, data) {
+  $rootScope.$on('refreshSelectedStation', function(event, data) {
     StationsService.fetchStationById(ctrl.selectedStation.id)
       .then(function(station) {
         ctrl.selectedStation = station;

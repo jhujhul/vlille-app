@@ -15,3 +15,95 @@ html, body {
 .menu-container {
   height: 8vh;
 }
+
+.mylocation-button {
+  background-color: rgba(255,255,255,1);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  display: block;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.mylocation-button__icon {
+  background-image: url('../assets/mylocation-sprite-2x.png');
+  background-position: 0 0;
+  background-size: 180px 18px;
+  display: block;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.mylocation-button__icon:hover {
+  background-position: -36px 0;
+}
+
+.station-window__name {
+  color: #e43039;
+  font-weight: normal;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.station-window__status {
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.station-window__status--ok {
+  color: #10ab10;
+}
+
+.station-window__status--ko {
+  color: red;
+  font-weight: bold;
+}
+
+.text--important {
+  font-weight: 400;
+}
+
+.station-window__bornes {
+  margin-bottom: 10px;
+}
+
+.station-window__last-update {
+  font-size: 11px;
+  height: 22px;
+}
+
+.station-window__last-update-button {
+  background-image: url(../assets/refresh-icon.png);
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  background-position: 3px 3px;
+  background-color: #d0cfcf;
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 2px;
+  box-shadow: 1px 1px 1px #353535;
+}
+
+.station-window__last-update-button:hover {
+  opacity: 0.7;
+}
+
+
+  /*background-image: url('../assets/refresh-icon.png');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;*/

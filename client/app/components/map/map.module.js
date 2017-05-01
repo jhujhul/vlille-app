@@ -3,5 +3,6 @@ angular
     'ui.router',
     'stations-filters',
     'station-window',
-    'stations-markers'
+    'stations-markers',
+    'center-map-control'
   ]);
