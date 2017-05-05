@@ -4,3 +4,8 @@ client/bower_components/
 .tmp/
 dist/
 client/app/app.templates.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -8,6 +8,7 @@ app.use('/static', express.static(__dirname + '/client'));
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.last);
 
-app.listen(3000, function () {
-  console.log('Vlille app listening on port 3000!');
+var port = process.env.PORT;
+app.listen(port, function () {
+  console.log('Vlille app listening on port ' + port);
 });
