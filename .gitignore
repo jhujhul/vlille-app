@@ -4,6 +4,7 @@ client/bower_components/
 .tmp/
 dist/
 client/app/app.templates.js
+.env
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
