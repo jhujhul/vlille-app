@@ -13,6 +13,7 @@ angular
       url: '/map',
       component: 'map',
       resolve: {
+        /* @ngInject */
         stations: function(StationsService) {
           return StationsService.fetchAllStations();
         }
