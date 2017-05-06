@@ -1,0 +1,23 @@
+# Copy from gitignore:
+
+# App files
+node_modules/
+client/bower_components/
+.DS_Store
+.tmp/
+dist/
+client/app/app.templates.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+
+# Specific files for Elastic Beanstalk
+client/
+.bowerrc
+.editorconfig
+.eslintrc.json
+bower.json
+Gruntfile.js
