@@ -24,3 +24,4 @@ client/
 bower.json
 Gruntfile.js
 .env-sample
+setup.js

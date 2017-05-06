@@ -1,8 +1,15 @@
 var express = require('express');
 var app = express();
 require('dotenv').config();
+var cors = require('cors');
 var stations = require('./server/stations');
 var errorMiddleware = require('./server/error-middleware');
+
+var corsOptions = {
+  origin: 'http://vlille-app.s3-website.eu-west-2.amazonaws.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 var nodeEnv = process.env.NODE_ENV;
 

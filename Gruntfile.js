@@ -44,6 +44,11 @@ module.exports = function (grunt) {
         constants: {
           config: grunt.file.readJSON('client/config-dev.json')
         }
+      },
+      prod: {
+        constants: {
+          config: grunt.file.readJSON('client/config-prod.json')
+        }
       }
     },
     clean: ['dist/', '.tmp/'],
@@ -110,6 +115,17 @@ module.exports = function (grunt) {
     },
     usemin: {
       html: ['dist/index.html']
+    },
+    concat: {
+      // Wrap script.js in a iife
+      iife: {
+        src: ['dist/js/scripts.js'],
+        dest: 'dist/js/scripts.js',
+        options: {
+          banner: '(function () {',
+          footer: '})();'
+        }
+      }
     }
   });
 
@@ -133,10 +149,11 @@ module.exports = function (grunt) {
       'useminPrepare',
       'ngtemplates',
       'concat:generated',
-      'ngAnnotate',
+      'ngAnnotate:dist',
       'copy:usemin',
-      // 'cssmin:generated',
-      // 'uglify:generated',
+      'cssmin:generated',
+      'uglify:generated',
+      'concat:iife',
       'usemin'
     ]);
   });
