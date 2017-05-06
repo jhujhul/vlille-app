@@ -24,10 +24,10 @@ function getCachedStationById(id) {
 
 function initialFetchAndStartCronJob() {
   async.series([
-        // Fetch all stations
+    // Fetch all stations
     fetchAllStations,
-        // 2 minutes later, start a cron job
-        // Cron job fetch all stations every 5 minutes
+    // 2 minutes later, start a cron job
+    // Cron job fetch all stations every 5 minutes
     function() {
       setTimeout(function () {
         console.log('Start cron job');

@@ -82,6 +82,16 @@ module.exports = function (grunt) {
             dest: 'dist/'
           }
         ]
+      },
+      usemin: {
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/concat/',
+            src: ['**'],
+            dest: 'dist/'
+          }
+        ]
       }
     },
     useminPrepare: {
@@ -96,9 +106,6 @@ module.exports = function (grunt) {
         files: [{
           src: '.tmp/concat/js/scripts.js',
           dest: '.tmp/concat/js/scripts.js'
-        }, {
-          src: '.tmp/concat/js/vendor.js',
-          dest: '.tmp/concat/js/vendor.js'
         }]
       }
     },
@@ -123,13 +130,14 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean',
       'ngconstant:' + env,
-      'copy',
+      'copy:main',
       'useminPrepare',
       'ngtemplates',
       'concat:generated',
       'ngAnnotate',
-      'cssmin:generated',
-      'uglify:generated',
+      'copy:usemin',
+      // 'cssmin:generated',
+      // 'uglify:generated',
       'usemin'
     ]);
   });

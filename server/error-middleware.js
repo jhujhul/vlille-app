@@ -16,7 +16,7 @@ exports.last = function (err, req, res, next) {
   if(err.isBoom) {
     error = err;
   }
-    // If error was not created by Boom, log error and send a 500 generic error
+  // If error was not created by Boom, send a 500 generic error
   else {
     var errorMessage = err.message;
     error = Boom.badImplementation(errorMessage);
