@@ -6,7 +6,7 @@ var stations = require('./server/stations');
 var errorMiddleware = require('./server/error-middleware');
 
 var corsOptions = {
-  origin: 'http://vlille-app.s3-website.eu-west-2.amazonaws.com',
+  origin: 'http://d1mfse4cpr43kw.cloudfront.net',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
