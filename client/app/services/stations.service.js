@@ -2,8 +2,9 @@ angular
   .module('app')
   .factory('StationsService', StationsService);
 
-function StationsService($http, $q, config) {
+function StationsService($http, $q) {
   var stations = [];
+  var API_SERVER_BASEURL = "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime";
 
   var service = {
     fetchAllStations: fetchAllStations,
@@ -14,11 +15,12 @@ function StationsService($http, $q, config) {
   return service;
 
   function fetchAllStations() {
-    var url = config.API_SERVER_BASEURL + '/stations';
+    var url = API_SERVER_BASEURL + '&rows=300';
 
     return $http.get(url)
       .then(function getStationsSuccess(response) {
-        stations = response.data;
+        console.log('response', response);
+        stations = response.data.records.map(parseApiStation);
         return stations;
       })
       .catch(function getStationsError(error) {
@@ -28,17 +30,17 @@ function StationsService($http, $q, config) {
   }
 
   function fetchStationById(id) {
-    var url = config.API_SERVER_BASEURL + '/stations/' + id;
+    var url = API_SERVER_BASEURL + '&rows=1&q=libelle=' + id;
 
     return $http.get(url)
       .then(function getStationSuccess(response) {
-        var station = response.data;
+        var station = parseApiStation(response.data.records[0]);
         updateStation(id, station);
 
         return station;
       })
       .catch(function getStationError(error) {
-        console.log('XHR error for getStations');
+        console.log('XHR error for getStation');
         $q.reject(error.data);
       });
   }
@@ -59,5 +61,20 @@ function StationsService($http, $q, config) {
         return;
       }
     }
+  }
+
+  function parseApiStation(station) {
+    return {
+      id: station.fields.libelle,
+      name: station.fields.nom,
+      latitude: station.fields.geo[0],
+      longitude: station.fields.geo[1],
+      adress: station.fields.adresse,
+      isOutOfService: station.fields.etat !== 'EN SERVICE' || station.fields.etatConnexion !== 'CONNECTEE',
+      bikes: station.fields.nbVelosDispo,
+      attachs: station.fields.nbPlacesDispo,
+      hasCreditCardTerminal: station.fields.type === 'AVEC TPE',
+      lastUpdate: station.record_timestamp
+    };
   }
 }
