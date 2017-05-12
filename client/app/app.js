@@ -1,10 +1,5 @@
 angular
-  .module('app', [
-    'components',
-    'uiGmapgoogle-maps',
-    'ui.router',
-    'config'
-  ])
+  .module('app', ['components', 'uiGmapgoogle-maps', 'ui.router', 'config'])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyA6gr3zDRveuD-4BrFq5VzKcNS6bTRVofo',
@@ -12,6 +7,7 @@ angular
       libraries: 'weather,geometry,visualization'
     });
   })
-  .config(function($urlRouterProvider) {
+  .config(function($urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/map');
   });
