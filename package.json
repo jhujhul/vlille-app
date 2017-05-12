@@ -8,7 +8,8 @@
     "start": "grunt serve",
     "build": "grunt build",
     "deploy-webapp": "grunt build:prod && aws s3 sync dist/ s3://vlille-app",
-    "deploy-server": "eb deploy"
+    "deploy-server": "eb deploy",
+    "precommit": "lint-staged"
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +38,14 @@
     "grunt-express-server": "^0.5.3",
     "grunt-ng-annotate": "^2.0.2",
     "grunt-ng-constant": "^2.0.1",
-    "grunt-usemin": "^3.0.0"
+    "grunt-usemin": "^3.0.0",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --single-quote",
+      "git add"
+    ]
   }
 }
