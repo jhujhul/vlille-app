@@ -1,7 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
-
+module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-ng-constant');
@@ -52,21 +51,21 @@ module.exports = function (grunt) {
       }
     },
     clean: ['dist/', '.tmp/'],
-    ngtemplates:  {
-      app:        {
-        cwd:      'client',
-        src:      'app/**/*.html',
-        dest:     'client/app/app.templates.js',
+    ngtemplates: {
+      app: {
+        cwd: 'client',
+        src: 'app/**/*.html',
+        dest: 'client/app/app.templates.js',
         options: {
           htmlmin: {
-            collapseBooleanAttributes:      true,
-            collapseWhitespace:             true,
-            removeAttributeQuotes:          true,
-            removeComments:                 true,
-            removeEmptyAttributes:          true,
-            removeRedundantAttributes:      true,
-            removeScriptTypeAttributes:     true,
-            removeStyleLinkTypeAttributes:  true
+            collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            removeAttributeQuotes: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true
           },
           usemin: 'js/scripts.js'
         }
@@ -107,10 +106,12 @@ module.exports = function (grunt) {
     },
     ngAnnotate: {
       dist: {
-        files: [{
-          src: '.tmp/concat/js/scripts.js',
-          dest: '.tmp/concat/js/scripts.js'
-        }]
+        files: [
+          {
+            src: '.tmp/concat/js/scripts.js',
+            dest: '.tmp/concat/js/scripts.js'
+          }
+        ]
       }
     },
     usemin: {
@@ -129,14 +130,8 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('serve', 'Start a local web server', function () {
-
-    grunt.task.run([
-      'ngconstant:dev',
-      'express',
-      'watch'
-    ]);
-
+  grunt.registerTask('serve', 'Start a local web server', function() {
+    grunt.task.run(['ngconstant:dev', 'express', 'watch']);
   });
 
   grunt.registerTask('build', 'Build webapp for deployment', function(env) {
@@ -157,5 +152,4 @@ module.exports = function (grunt) {
       'usemin'
     ]);
   });
-
 };

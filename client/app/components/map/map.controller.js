@@ -1,6 +1,4 @@
-angular
-  .module('map')
-  .controller('MapController', MapController);
+angular.module('map').controller('MapController', MapController);
 
 function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
   var ctrl = this;
@@ -41,7 +39,7 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
     var newStationsMarkers = [];
 
     angular.forEach(ctrl.stations, function(station) {
-      if(displayStation(station)) {
+      if (displayStation(station)) {
         var marker = {
           id: station.id,
           latitude: station.latitude,
@@ -53,8 +51,8 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
       }
     });
 
-    if(ctrl.userPosition) {
-      console.log('ctrl.userPosition', ctrl.userPosition)
+    if (ctrl.userPosition) {
+      console.log('ctrl.userPosition', ctrl.userPosition);
       var userMarker = {
         id: 'user',
         latitude: ctrl.userPosition.coords.latitude,
@@ -75,9 +73,11 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
   }
 
   function displayStation(station) {
-    if (ctrl.filters.avaibleBikes && !station.bikes
-      || ctrl.filters.avaibleStations && !station.attachs
-      || station.id === ctrl.selectedStation.id) {
+    if (
+      (ctrl.filters.avaibleBikes && !station.bikes) ||
+      (ctrl.filters.avaibleStations && !station.attachs) ||
+      station.id === ctrl.selectedStation.id
+    ) {
       return false;
     }
 
@@ -96,15 +96,18 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
   function getUserPosition(intervalCount) {
     var firstTimeFunctionIsCalled = intervalCount === 0;
 
-    navigator.geolocation.getCurrentPosition(function (position) {
-      ctrl.userPosition = position;
-      ctrl.refreshMarkersList();
-      if (firstTimeFunctionIsCalled) {
-        ctrl.centerMapOnUser();
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        ctrl.userPosition = position;
+        ctrl.refreshMarkersList();
+        if (firstTimeFunctionIsCalled) {
+          ctrl.centerMapOnUser();
+        }
+      },
+      function() {
+        console.log('Cannot get current position');
       }
-    }, function () {
-      console.log('Cannot get current position');
-    });
+    );
   }
 
   function centerMap(lat, lng) {
@@ -113,13 +116,16 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
 
   ctrl.centerMapOnUser = function() {
     if (ctrl.userPosition) {
-      centerMap(ctrl.userPosition.coords.latitude, ctrl.userPosition.coords.longitude);
+      centerMap(
+        ctrl.userPosition.coords.latitude,
+        ctrl.userPosition.coords.longitude
+      );
     }
   };
 
   ctrl.selectStation = function(id) {
     ctrl.selectedStation = StationsService.getStationById(id);
-    console.log('ctrl.selectedStation', ctrl.selectedStation)
+    console.log('ctrl.selectedStation', ctrl.selectedStation);
     ctrl.refreshMarkersList();
   };
 
@@ -129,9 +135,10 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
   };
 
   $rootScope.$on('refreshSelectedStation', function(event, data) {
-    StationsService.fetchStationById(ctrl.selectedStation.id)
-      .then(function(station) {
-        ctrl.selectedStation = station;
-      });
+    StationsService.fetchStationById(ctrl.selectedStation.id).then(function(
+      station
+    ) {
+      ctrl.selectedStation = station;
+    });
   });
 }
