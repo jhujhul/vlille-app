@@ -15,13 +15,16 @@ var nodeEnv = process.env.NODE_ENV;
 
 if (nodeEnv === 'local') {
   app.use('/static', express.static(__dirname + '/client'));
+  app.get('*', function(req, res) {
+    res.sendFile(__dirname + '/client/index.html');
+  });
 }
 app.use('/api/stations', stations);
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.last);
 
 var port = process.env.PORT;
-app.listen(port, function () {
+app.listen(port, function() {
   console.log('process.env.NODE_ENV', process.env.NODE_ENV);
   console.log('Vlille app listening on port ' + port);
 });
