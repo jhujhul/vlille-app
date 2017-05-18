@@ -1,5 +1,10 @@
 angular
-  .module('app', ['components', 'uiGmapgoogle-maps', 'ui.router', 'config'])
+  .module('app', [
+    'components',
+    'uiGmapgoogle-maps',
+    'ui.router'
+    // 'config'
+  ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyA6gr3zDRveuD-4BrFq5VzKcNS6bTRVofo',
