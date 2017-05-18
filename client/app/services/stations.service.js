@@ -19,7 +19,6 @@ function StationsService($http, $q) {
     return $http
       .get(url)
       .then(function getStationsSuccess(response) {
-        console.log('response', response);
         stations = response.data.records.map(parseApiStation);
         return stations;
       })
