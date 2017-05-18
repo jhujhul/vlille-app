@@ -12,6 +12,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-targethtml');
 
   grunt.initConfig({
     express: {
@@ -127,6 +128,13 @@ module.exports = function(grunt) {
           footer: '})();'
         }
       }
+    },
+    targethtml: {
+      dist: {
+        files: {
+          'dist/index.html': 'dist/index.html'
+        }
+      }
     }
   });
 
@@ -149,7 +157,8 @@ module.exports = function(grunt) {
       'cssmin:generated',
       'uglify:generated',
       'concat:iife',
-      'usemin'
+      'usemin',
+      'targethtml:dist'
     ]);
   });
 };
