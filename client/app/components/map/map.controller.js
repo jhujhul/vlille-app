@@ -28,31 +28,17 @@ function MapController(
       control: {},
       options: {
         mapTypeControl: false,
-        streetViewControl: false
+        streetViewControl: false,
+        clickableIcons: false
       },
       window: {
         show: false,
         marker: {}
-      },
-      events: {
-        click: handleMapClick
       }
     };
 
     ctrl.geolocationAvailable = !!navigator.geolocation;
   };
-
-  // Use to fix bug where, when a station was selected and user clicked on a map location
-  // the former selected station marker would not show on the map
-  function handleMapClick(map, eventName, args) {
-    // If user clicked on location, refresh markers list
-    if (args[0].placeId) {
-      ctrl.deleteSelectedStation();
-      // A bit ugly, but the marker of the former selected station would not show
-      // or only after user moved map, or click on map
-      $scope.$apply();
-    }
-  }
 
   function getMarkersList() {
     var newStationsMarkers = [];
@@ -154,11 +140,13 @@ function MapController(
   };
 
   $rootScope.$on('refreshSelectedStation', function(event, data) {
-    StationsService.fetchStationById(ctrl.selectedStation.id).then(function(
-      station
-    ) {
-      ctrl.selectedStation = station;
-    });
+    StationsService.fetchStationById(ctrl.selectedStation.id)
+      .then(function(station) {
+        ctrl.selectedStation = station;
+      })
+      .catch(function() {
+        console.log('Error fetching station data');
+      });
   });
 
   // Fetch station list every 3 minutes
