@@ -139,4 +139,13 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
       ctrl.selectedStation = station;
     });
   });
+
+  // Fetch station list every 3 minutes
+  $interval(refreshStationsList, 3 * 60 * 1000);
+
+  function refreshStationsList() {
+    StationsService.fetchAllStations().then(function(stations) {
+      ctrl.stations = stations;
+    });
+  }
 }
