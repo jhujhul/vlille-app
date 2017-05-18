@@ -1,22 +1,13 @@
-<ui-gmap-google-map
-  center='$ctrl.map.center'
-  zoom='$ctrl.map.zoom'
-  control='$ctrl.map.control'
-  events='$ctrl.map.events'
+<ui-gmap-google-map center='$ctrl.map.center' zoom='$ctrl.map.zoom' control='$ctrl.map.control' events='$ctrl.map.events'
   options='$ctrl.map.options'>
-  <stations-markers
-    markers='$ctrl.stationsMarkers'
-    on-station-selected='$ctrl.selectStation(id)'>
+  <stations-markers markers='$ctrl.stationsMarkers' on-station-selected='$ctrl.selectStation(id)'>
   </stations-markers>
   <!--<stations-filters
     filters="$ctrl.filters"
     on-change="$ctrl.refreshMarkersList()">
   </stations-filters>-->
-  <station-window
-    selected-station="$ctrl.selectedStation"
-    on-close-click="$ctrl.deleteSelectedStation()">
+  <station-window selected-station="$ctrl.selectedStation" on-close-click="$ctrl.deleteSelectedStation()">
   </station-window>
-  <center-map-control
-    on-click="$ctrl.centerMapOnUser()">
+  <center-map-control ng-if="$ctrl.geolocationAvailable" on-click="$ctrl.centerMapOnUser()">
   </center-map-control>
 </ui-gmap-google-map>
