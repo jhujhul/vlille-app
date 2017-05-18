@@ -13,6 +13,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-targethtml');
+  grunt.loadNpmTasks('grunt-filerev');
 
   grunt.initConfig({
     express: {
@@ -135,6 +136,11 @@ module.exports = function(grunt) {
           'dist/index.html': 'dist/index.html'
         }
       }
+    },
+    filerev: {
+      dist: {
+        src: ['dist/css/**', 'dist/js/**']
+      }
     }
   });
 
@@ -157,6 +163,8 @@ module.exports = function(grunt) {
       'cssmin:generated',
       'uglify:generated',
       'concat:iife',
+      'usemin',
+      'filerev:dist',
       'usemin',
       'targethtml:dist'
     ]);
