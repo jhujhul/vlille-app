@@ -29,11 +29,9 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
         marker: {}
       }
     };
-  };
 
-  // uiGmapIsReady.promise(1).then(function(instances) {
-  //   console.log('gmap ready !');
-  // });
+    ctrl.geolocationAvailable = !!navigator.geolocation;
+  };
 
   function getMarkersList() {
     var newStationsMarkers = [];
@@ -52,7 +50,6 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
     });
 
     if (ctrl.userPosition) {
-      console.log('ctrl.userPosition', ctrl.userPosition);
       var userMarker = {
         id: 'user',
         latitude: ctrl.userPosition.coords.latitude,
@@ -88,20 +85,24 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
     ctrl.stationsMarkers = getMarkersList();
   };
 
-  if (navigator.geolocation) {
-    getUserPosition(0);
-    $interval(getUserPosition, 30 * 1000);
+  function centerMap(lat, lng) {
+    ctrl.map.control.refresh({ latitude: lat, longitude: lng });
   }
 
-  function getUserPosition(intervalCount) {
-    var firstTimeFunctionIsCalled = intervalCount === 0;
+  $interval(function() {
+    getUserPosition(false);
+  }, 30 * 1000);
 
+  function getUserPosition(doCenterMap) {
     navigator.geolocation.getCurrentPosition(
       function(position) {
         ctrl.userPosition = position;
         ctrl.refreshMarkersList();
-        if (firstTimeFunctionIsCalled) {
-          ctrl.centerMapOnUser();
+        if (doCenterMap) {
+          centerMap(
+            ctrl.userPosition.coords.latitude,
+            ctrl.userPosition.coords.longitude
+          );
         }
       },
       function() {
@@ -110,22 +111,19 @@ function MapController(StationsService, uiGmapIsReady, $rootScope, $interval) {
     );
   }
 
-  function centerMap(lat, lng) {
-    ctrl.map.control.refresh({ latitude: lat, longitude: lng });
-  }
-
   ctrl.centerMapOnUser = function() {
     if (ctrl.userPosition) {
       centerMap(
         ctrl.userPosition.coords.latitude,
         ctrl.userPosition.coords.longitude
       );
+    } else if (ctrl.geolocationAvailable) {
+      getUserPosition(true);
     }
   };
 
   ctrl.selectStation = function(id) {
     ctrl.selectedStation = StationsService.getStationById(id);
-    console.log('ctrl.selectedStation', ctrl.selectedStation);
     ctrl.refreshMarkersList();
   };
 
