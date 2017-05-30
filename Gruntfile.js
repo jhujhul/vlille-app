@@ -85,6 +85,10 @@ module.exports = function(grunt) {
             cwd: 'client/',
             src: ['assets/**'],
             dest: 'dist/'
+          },
+          {
+            src: 'client/sitemap.xml',
+            dest: 'dist/sitemap.xml'
           }
         ]
       },
