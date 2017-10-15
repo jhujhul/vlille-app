@@ -89,6 +89,10 @@ module.exports = function(grunt) {
           {
             src: 'client/sitemap.xml',
             dest: 'dist/sitemap.xml'
+          },
+          {
+            src: 'client/google9e3aa6c7a801453c.html',
+            dest: 'dist/google9e3aa6c7a801453c.html'
           }
         ]
       },
