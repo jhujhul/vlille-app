@@ -72,9 +72,9 @@ function StationsService($http, $q) {
       adress: station.fields.adresse,
       isOutOfService:
         station.fields.etat !== "EN SERVICE" ||
-        station.fields.etatConnexion !== "CONNECTEE",
-      bikes: station.fields.nbVelosDispo,
-      attachs: station.fields.nbPlacesDispo,
+        station.fields.etatconnexion !== "CONNECTEE",
+      bikes: station.fields.nbvelosdispo,
+      attachs: station.fields.nbplacesdispo,
       hasCreditCardTerminal: station.fields.type === "AVEC TPE",
       lastUpdate: station.record_timestamp
     };
