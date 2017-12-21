@@ -1,3 +1,1 @@
-angular
-  .module('station-window', [
-  ]);
+angular.module("station-window", []);

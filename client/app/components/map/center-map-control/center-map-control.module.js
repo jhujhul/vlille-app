@@ -1,3 +1,1 @@
-angular
-  .module('center-map-control', [
-  ]);
+angular.module("center-map-control", []);

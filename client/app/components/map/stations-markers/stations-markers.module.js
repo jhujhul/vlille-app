@@ -1,3 +1,1 @@
-angular
-  .module('stations-markers', [
-  ]);
+angular.module("stations-markers", []);

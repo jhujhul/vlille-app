@@ -1,19 +1,11 @@
 {
   "name": "vlille",
-  "authors": [
-    "jhujhul <julien.birgand@gmail.com>"
-  ],
+  "authors": ["jhujhul <julien.birgand@gmail.com>"],
   "description": "",
   "main": "",
   "license": "MIT",
   "homepage": "",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
     "angular": "^1.5.8",
     "angular-google-maps": "^2.4.0",

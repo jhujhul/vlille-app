@@ -1,6 +1,6 @@
 angular
-  .module('station-window')
-  .controller('StationWindowController', StationWindowController);
+  .module("station-window")
+  .controller("StationWindowController", StationWindowController);
 
 function StationWindowController() {
   var ctrl = this;

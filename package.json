@@ -7,10 +7,10 @@
     "postinstall": "bower install && node setup.js",
     "start": "grunt serve",
     "build": "grunt build",
-    "deploy": "aws s3 sync dist/ s3://vlille-app --delete && aws s3 cp s3://vlille-app/index.html s3://vlille-app/index.html --metadata-directive REPLACE --cache-control no-cache",
+    "deploy":
+      "aws s3 sync dist/ s3://vlille-app --delete && aws s3 cp s3://vlille-app/index.html s3://vlille-app/index.html --metadata-directive REPLACE --cache-control no-cache",
     "build-and-deploy": "npm run-script build && npm run-script deploy",
-    "deploy-server": "eb deploy",
-    "precommit": "lint-staged"
+    "deploy-server": "eb deploy"
   },
   "author": "",
   "license": "ISC",
@@ -42,13 +42,6 @@
     "grunt-ng-constant": "^2.0.1",
     "grunt-targethtml": "^0.2.6",
     "grunt-usemin": "^3.0.0",
-    "husky": "^0.13.3",
-    "lint-staged": "^3.4.1"
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write --single-quote",
-      "git add"
-    ]
+    "husky": "^0.13.3"
   }
 }

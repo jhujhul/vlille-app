@@ -1,4 +1,1 @@
-angular
-  .module('components', [
-    'map'
-  ]);
+angular.module("components", ["map"]);

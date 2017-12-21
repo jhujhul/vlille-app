@@ -1,4 +1,4 @@
-angular.module('map').controller('MapController', MapController);
+angular.module("map").controller("MapController", MapController);
 
 function MapController(
   StationsService,
@@ -58,11 +58,11 @@ function MapController(
 
     if (ctrl.userPosition) {
       var userMarker = {
-        id: 'user',
+        id: "user",
         latitude: ctrl.userPosition.coords.latitude,
         longitude: ctrl.userPosition.coords.longitude,
         icon: {
-          url: 'assets/user-location.png',
+          url: "assets/user-location.png",
           anchor: {
             x: 18,
             y: 18
@@ -113,7 +113,7 @@ function MapController(
         }
       },
       function() {
-        console.log('Cannot get current position');
+        console.log("Cannot get current position");
       }
     );
   }
@@ -139,13 +139,13 @@ function MapController(
     ctrl.refreshMarkersList();
   };
 
-  $rootScope.$on('refreshSelectedStation', function(event, data) {
+  $rootScope.$on("refreshSelectedStation", function(event, data) {
     StationsService.fetchStationById(ctrl.selectedStation.id)
       .then(function(station) {
         ctrl.selectedStation = station;
       })
       .catch(function() {
-        console.log('Error fetching station data');
+        console.log("Error fetching station data");
       });
   });
 

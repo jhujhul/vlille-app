@@ -1,9 +1,9 @@
-angular.module('app').factory('StationsService', StationsService);
+angular.module("app").factory("StationsService", StationsService);
 
 function StationsService($http, $q) {
   var stations = [];
   var API_SERVER_BASEURL =
-    'https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime';
+    "https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime";
 
   var service = {
     fetchAllStations: fetchAllStations,
@@ -14,7 +14,7 @@ function StationsService($http, $q) {
   return service;
 
   function fetchAllStations() {
-    var url = API_SERVER_BASEURL + '&rows=300';
+    var url = API_SERVER_BASEURL + "&rows=300";
 
     return $http
       .get(url)
@@ -23,13 +23,13 @@ function StationsService($http, $q) {
         return stations;
       })
       .catch(function getStationsError(error) {
-        console.log('XHR error for getStations');
+        console.log("XHR error for getStations");
         $q.reject(error.data);
       });
   }
 
   function fetchStationById(id) {
-    var url = API_SERVER_BASEURL + '&rows=1&q=libelle=' + id;
+    var url = API_SERVER_BASEURL + "&rows=1&q=libelle=" + id;
 
     return $http
       .get(url)
@@ -40,7 +40,7 @@ function StationsService($http, $q) {
         return station;
       })
       .catch(function getStationError(error) {
-        console.log('XHR error for getStation');
+        console.log("XHR error for getStation");
         $q.reject(error.data);
       });
   }
@@ -70,11 +70,12 @@ function StationsService($http, $q) {
       latitude: station.fields.geo[0],
       longitude: station.fields.geo[1],
       adress: station.fields.adresse,
-      isOutOfService: station.fields.etat !== 'EN SERVICE' ||
-        station.fields.etatConnexion !== 'CONNECTEE',
+      isOutOfService:
+        station.fields.etat !== "EN SERVICE" ||
+        station.fields.etatConnexion !== "CONNECTEE",
       bikes: station.fields.nbVelosDispo,
       attachs: station.fields.nbPlacesDispo,
-      hasCreditCardTerminal: station.fields.type === 'AVEC TPE',
+      hasCreditCardTerminal: station.fields.type === "AVEC TPE",
       lastUpdate: station.record_timestamp
     };
   }
@@ -85,10 +86,10 @@ function StationsService($http, $q) {
   // ie: '66 Delesalle Mediatheque' or '27 Tanneurs (CB)'
   function parseApiNom(nom) {
     return nom
-      .split(' ')
+      .split(" ")
       .filter(function(part, index) {
-        return index > 0 && part !== '(CB)';
+        return index > 0 && part !== "(CB)";
       })
-      .join(' ');
+      .join(" ");
   }
 }

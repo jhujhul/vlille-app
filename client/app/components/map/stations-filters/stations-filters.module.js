@@ -1,3 +1,1 @@
-angular
-  .module('stations-filters', [
-  ]);
+angular.module("stations-filters", []);

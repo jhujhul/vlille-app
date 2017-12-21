@@ -1,7 +1,7 @@
-angular.module('map', [
-  'ui.router',
+angular.module("map", [
+  "ui.router",
   // 'stations-filters',
-  'station-window',
-  'stations-markers',
-  'center-map-control'
+  "station-window",
+  "stations-markers",
+  "center-map-control"
 ]);

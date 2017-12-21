@@ -1,9 +1,7 @@
-angular
-  .module('station-window')
-  .filter('timeElapsed', timeElapsed);
+angular.module("station-window").filter("timeElapsed", timeElapsed);
 
-function timeElapsed () {
-  return function (isoDate) {
+function timeElapsed() {
+  return function(isoDate) {
     var date = new Date(isoDate);
     var now = new Date();
 
